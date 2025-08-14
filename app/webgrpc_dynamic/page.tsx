@@ -30,7 +30,6 @@ export default function Home() {
         <h1 className="text-4xl font-bold mb-8">Connect Web gRPC with Next.js + Go (Dynamic)</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
             <input
-                className="mr-2"
                 value={inputValue}
                 style={{ padding: "0.5rem", width: "300px", background: '#fff', color: '#000', borderRadius: '5px' }}
                 onChange={(e) => setInputValue(e.target.value)}

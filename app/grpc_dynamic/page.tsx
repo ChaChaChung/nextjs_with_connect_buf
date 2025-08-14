@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function Home() {
+export default function DynamicPage() {
   const [inputValue, setInputValue] = useState("Hello from Next.js client!");
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
