@@ -1,8 +1,7 @@
-// app/page.tsx
 "use client";
 
 import { useState } from 'react'
-import { createPromiseClient } from "@connectrpc/connect";
+import { createClient } from "@connectrpc/connect";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { ElizaService } from "../../gen/proto/eliza_connect";
 
@@ -16,7 +15,7 @@ export default function HomePage() {
             baseUrl: "http://localhost:8080",
         });
 
-        const client = createPromiseClient(ElizaService, transport);
+        const client = createClient(ElizaService, transport);
 
         // 傳值給 Go
         const res = await client.say({ sentence: msg });
