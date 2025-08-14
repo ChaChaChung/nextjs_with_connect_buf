@@ -14,10 +14,8 @@ export default async function StaticPage() {
 
   // 2. 將拿到的資料直接渲染成 JSX
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
-        Statically Generated Page
-      </h1>
+    <main className="flex min-h-screen flex-col items-center p-24">
+      <h1 className="text-4xl font-bold mb-8">Connect gRPC with Next.js + Go (Static)</h1>
       <p>
         這個頁面的內容是在專案**建置時**就從 Go 後端取得並預先渲染好的。
       </p>

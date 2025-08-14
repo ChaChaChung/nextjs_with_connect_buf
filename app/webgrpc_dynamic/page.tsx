@@ -6,32 +6,51 @@ import { elizaClient } from "../lib/connect";
 export default function Home() {
     const [msg, setMsg] = useState('')
     const [response, setResponse] = useState('')
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setIsLoading(true);
+        setResponse("");
 
-        // 傳值給 Go
-        const res = await elizaClient.say({ sentence: msg });
-        setResponse(res.sentence)
-
-        // 從 Go 取回資料
-        // alert(res.sentence);
+        try {
+            // 傳值給 Go
+            const res = await elizaClient.say({ sentence: msg });
+            setResponse(res.sentence)
+        } catch (error) {
+            console.error(error);
+            setResponse("Failed to get response from server.");
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
         <main className="flex min-h-screen flex-col items-center p-24">
-        <h1 className="text-4xl font-bold mb-8">ConnectRPC with Next.js + Go</h1>
+        <h1 className="text-4xl font-bold mb-8">Connect Web gRPC with Next.js + Go (Dynamic)</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
-            <input className="mr-2" style={{ background: '#fff', color: '#000' }} onChange={(e) => setMsg(e.target.value)} />
-            <button style={{ background: '#fff', color: '#000', padding: '5px', borderRadius: '10px' }}>
-                Submit
+            <input
+                className="mr-2"
+                style={{ padding: "0.5rem", width: "300px", background: '#fff', color: '#000', borderRadius: '5px' }}
+                onChange={(e) => setMsg(e.target.value)}
+            />
+            <button 
+                type="submit"
+                disabled={isLoading}
+                style={{ padding: "0.5rem 1rem", marginLeft: "0.5rem", background: '#ff7e7e', color: '#fff', borderRadius: '5px' }}
+            >
+                {isLoading ? "Sending..." : "Send to Go via Next.js API"}
             </button>
         </form>
-        <div className="mb-12 p-6 border rounded-lg bg-gray-50">
-            <p className="mt-4 text-lg text-blue-600">
-            <strong>Go Server Response:</strong> {response}
-            </p>
-        </div>
+        {
+            response && (
+                <div className="mb-12 p-6 border rounded-lg bg-gray-50">
+                    <p className="text-lg text-blue-600">
+                    <strong>Go Server Response:</strong> {response}
+                    </p>
+                </div>
+            )
+        }
         </main>
     );
 }

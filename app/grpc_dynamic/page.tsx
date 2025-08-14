@@ -28,7 +28,6 @@ export default function Home() {
 
       const data = await res.json();
       setResponse(data.sentence);
-
     } catch (error) {
       console.error(error);
       setResponse("Failed to get response from server.");
@@ -38,21 +37,19 @@ export default function Home() {
   };
 
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
-        Next.js BFF Pattern with ConnectRPC
-      </h1>
+    <main className="flex min-h-screen flex-col items-center p-24">
+      <h1 className="text-4xl font-bold mb-8">Connect gRPC with Next.js + Go (Dynamic)</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          style={{ padding: "0.5rem", width: "300px" }}
+          style={{ padding: "0.5rem", width: "300px", background: '#fff', color: '#000', borderRadius: '5px' }}
         />
         <button
           type="submit"
           disabled={isLoading}
-          style={{ padding: "0.5rem 1rem", marginLeft: "0.5rem" }}
+          style={{ padding: "0.5rem 1rem", marginLeft: "0.5rem", background: '#ff7e7e', color: '#fff', borderRadius: '5px' }}
         >
           {isLoading ? "Sending..." : "Send to Go via Next.js API"}
         </button>
