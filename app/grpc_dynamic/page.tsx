@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       <h1 className="text-4xl font-bold mb-8">Connect gRPC with Next.js + Go (Dynamic)</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="space-y-6">
         <input
           type="text"
           value={inputValue}
@@ -55,13 +55,15 @@ export default function Home() {
         </button>
       </form>
 
-      {response && (
-        <div style={{ marginTop: "1rem" }}>
-          <p style={{ fontFamily: "monospace", background: "#eee", padding: "1rem", color: 'navy' }}>
-            <strong>Response:</strong> {response}
-          </p>
-        </div>
-      )}
+      {
+        response && (
+          <div className="mb-12 p-6 border rounded-lg bg-gray-50">
+              <p className="text-lg text-blue-600">
+              <strong>Go Server Response:</strong> {response}
+              </p>
+          </div>
+        )
+      }
     </main>
   );
 }

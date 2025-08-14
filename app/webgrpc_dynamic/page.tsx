@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { elizaClient } from "../lib/connect";
 
 export default function Home() {
-    const [msg, setMsg] = useState('')
-    const [response, setResponse] = useState('')
+    const [inputValue, setInputValue] = useState("Hello from Next.js client!");
+    const [response, setResponse] = useState("")
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -15,7 +15,7 @@ export default function Home() {
 
         try {
             // 傳值給 Go
-            const res = await elizaClient.say({ sentence: msg });
+            const res = await elizaClient.say({ sentence: inputValue });
             setResponse(res.sentence)
         } catch (error) {
             console.error(error);
@@ -31,8 +31,9 @@ export default function Home() {
         <form onSubmit={handleSubmit} className="space-y-6">
             <input
                 className="mr-2"
+                value={inputValue}
                 style={{ padding: "0.5rem", width: "300px", background: '#fff', color: '#000', borderRadius: '5px' }}
-                onChange={(e) => setMsg(e.target.value)}
+                onChange={(e) => setInputValue(e.target.value)}
             />
             <button 
                 type="submit"
