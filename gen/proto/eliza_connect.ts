@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { SayRequest, SayResponse, GetRandomPersonRequest, GetRandomPersonResponse } from "./eliza_pb.ts";
+import { SayRequest, SayResponse, GetRandomPersonRequest, GetRandomPersonResponse, GetAppearanceRequest, GetAppearanceResponse, UpdateAppearanceRequest, UpdateAppearanceResponse } from "./eliza_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -28,6 +28,24 @@ export const ElizaService = {
       name: "GetRandomPerson",
       I: GetRandomPersonRequest,
       O: GetRandomPersonResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc connectrpc.eliza.v1.ElizaService.GetAppearance
+     */
+    getAppearance: {
+      name: "GetAppearance",
+      I: GetAppearanceRequest,
+      O: GetAppearanceResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc connectrpc.eliza.v1.ElizaService.UpdateAppearance
+     */
+    updateAppearance: {
+      name: "UpdateAppearance",
+      I: UpdateAppearanceRequest,
+      O: UpdateAppearanceResponse,
       kind: MethodKind.Unary,
     },
   }

@@ -213,3 +213,242 @@ export class GetRandomPersonResponse extends Message<GetRandomPersonResponse> {
     return proto3.util.equals(GetRandomPersonResponse, a, b);
   }
 }
+
+/**
+ * @generated from message connectrpc.eliza.v1.GetAppearanceRequest
+ */
+export class GetAppearanceRequest extends Message<GetAppearanceRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  constructor(data?: PartialMessage<GetAppearanceRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "connectrpc.eliza.v1.GetAppearanceRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppearanceRequest {
+    return new GetAppearanceRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppearanceRequest {
+    return new GetAppearanceRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppearanceRequest {
+    return new GetAppearanceRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAppearanceRequest | PlainMessage<GetAppearanceRequest> | undefined, b: GetAppearanceRequest | PlainMessage<GetAppearanceRequest> | undefined): boolean {
+    return proto3.util.equals(GetAppearanceRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message connectrpc.eliza.v1.GetAppearanceResponse
+ */
+export class GetAppearanceResponse extends Message<GetAppearanceResponse> {
+  /**
+   * @generated from field: connectrpc.eliza.v1.Appearance appearance = 1;
+   */
+  appearance?: Appearance;
+
+  constructor(data?: PartialMessage<GetAppearanceResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "connectrpc.eliza.v1.GetAppearanceResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "appearance", kind: "message", T: Appearance },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppearanceResponse {
+    return new GetAppearanceResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppearanceResponse {
+    return new GetAppearanceResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppearanceResponse {
+    return new GetAppearanceResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAppearanceResponse | PlainMessage<GetAppearanceResponse> | undefined, b: GetAppearanceResponse | PlainMessage<GetAppearanceResponse> | undefined): boolean {
+    return proto3.util.equals(GetAppearanceResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message connectrpc.eliza.v1.UpdateAppearanceRequest
+ */
+export class UpdateAppearanceRequest extends Message<UpdateAppearanceRequest> {
+  /**
+   * @generated from field: connectrpc.eliza.v1.Appearance appearance = 1;
+   */
+  appearance?: Appearance;
+
+  constructor(data?: PartialMessage<UpdateAppearanceRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "connectrpc.eliza.v1.UpdateAppearanceRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "appearance", kind: "message", T: Appearance },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAppearanceRequest {
+    return new UpdateAppearanceRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAppearanceRequest {
+    return new UpdateAppearanceRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAppearanceRequest {
+    return new UpdateAppearanceRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateAppearanceRequest | PlainMessage<UpdateAppearanceRequest> | undefined, b: UpdateAppearanceRequest | PlainMessage<UpdateAppearanceRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateAppearanceRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message connectrpc.eliza.v1.UpdateAppearanceResponse
+ */
+export class UpdateAppearanceResponse extends Message<UpdateAppearanceResponse> {
+  /**
+   * @generated from field: connectrpc.eliza.v1.Appearance appearance = 1;
+   */
+  appearance?: Appearance;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<UpdateAppearanceResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "connectrpc.eliza.v1.UpdateAppearanceResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "appearance", kind: "message", T: Appearance },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAppearanceResponse {
+    return new UpdateAppearanceResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAppearanceResponse {
+    return new UpdateAppearanceResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAppearanceResponse {
+    return new UpdateAppearanceResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateAppearanceResponse | PlainMessage<UpdateAppearanceResponse> | undefined, b: UpdateAppearanceResponse | PlainMessage<UpdateAppearanceResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateAppearanceResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message connectrpc.eliza.v1.Appearance
+ */
+export class Appearance extends Message<Appearance> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string logo_url = 2;
+   */
+  logoUrl = "";
+
+  /**
+   * @generated from field: string primary_color = 3;
+   */
+  primaryColor = "";
+
+  /**
+   * @generated from field: string secondary_color = 4;
+   */
+  secondaryColor = "";
+
+  /**
+   * @generated from field: string created_at = 5;
+   */
+  createdAt = "";
+
+  /**
+   * @generated from field: string updated_at = 6;
+   */
+  updatedAt = "";
+
+  /**
+   * @generated from field: string logo_key = 7;
+   */
+  logoKey = "";
+
+  /**
+   * @generated from field: int64 logo_size = 8;
+   */
+  logoSize = "";
+
+  /**
+   * @generated from field: string logo_type = 9;
+   */
+  logoType = "";
+
+  constructor(data?: PartialMessage<Appearance>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "connectrpc.eliza.v1.Appearance";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "logo_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "primary_color", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "secondary_color", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "logo_key", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "logo_size", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 9, name: "logo_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Appearance {
+    return new Appearance().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Appearance {
+    return new Appearance().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Appearance {
+    return new Appearance().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Appearance | PlainMessage<Appearance> | undefined, b: Appearance | PlainMessage<Appearance> | undefined): boolean {
+    return proto3.util.equals(Appearance, a, b);
+  }
+}
