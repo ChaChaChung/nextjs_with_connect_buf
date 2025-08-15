@@ -19,6 +19,7 @@ export default function TestAppearancePage() {
   const [appearance, setAppearance] = useState<Appearance | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [selectedEndpoint, setSelectedEndpoint] = useState('appearance'); // 新增端點選擇
 
   // 測試獲取外觀設定
   const testGetAppearance = async () => {
@@ -31,11 +32,29 @@ export default function TestAppearancePage() {
     setMessage('');
 
     try {
-      const response = await fetch(`/api/eliza?id=${appearanceId}`);
+      // 根據選擇的端點使用不同的 API
+      let apiUrl = '';
+      switch (selectedEndpoint) {
+        case 'appearance':
+          apiUrl = `/api/appearance?id=${appearanceId}`;
+          break;
+        case 'appearance-get':
+          apiUrl = `/api/appearance/get?id=${appearanceId}`;
+          break;
+        case 'theme':
+          apiUrl = `/api/theme?id=${appearanceId}`;
+          break;
+        default:
+          apiUrl = `/api/eliza?id=${appearanceId}`;
+      }
+
+      const response = await fetch(apiUrl);
       const data = await response.json();
 
       if (response.ok) {
-        setAppearance(data.appearance);
+        // 根據不同端點處理回應資料
+        const appearanceData = data.appearance || data.theme;
+        setAppearance(appearanceData);
         setMessage(`成功獲取外觀設定: ${data.message}`);
       } else {
         setMessage(`錯誤: ${data.error}`);
@@ -63,26 +82,47 @@ export default function TestAppearancePage() {
       // 更新一些值作為測試
       const updatedAppearance = {
         ...appearance,
-        primary_color: '#FF6B6B',
-        secondary_color: '#4ECDC4',
-        logo_type: 'png',
-        logo_size: 1024
+        primaryColor: '#FF6B6B',
+        secondaryColor: '#4ECDC4',
+        logoType: 'png',
+        logoSize: 1024
       };
 
-      const response = await fetch('/api/eliza', {
-        method: 'PUT',
+      // 根據選擇的端點使用不同的 API
+      let apiUrl = '';
+      let requestBody = {};
+      
+      switch (selectedEndpoint) {
+        case 'appearance':
+          apiUrl = '/api/appearance';
+          requestBody = { appearance: updatedAppearance };
+          break;
+        case 'appearance-update':
+          apiUrl = '/api/appearance/update';
+          requestBody = { appearance: updatedAppearance };
+          break;
+        case 'theme':
+          apiUrl = '/api/theme';
+          requestBody = { theme: updatedAppearance };
+          break;
+        default:
+          apiUrl = '/api/eliza';
+          requestBody = { appearance: updatedAppearance };
+      }
+
+      const response = await fetch(apiUrl, {
+        method: selectedEndpoint === 'appearance' ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          appearance: updatedAppearance
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setAppearance(data.appearance);
+        const appearanceData = data.appearance || data.theme;
+        setAppearance(appearanceData);
         setMessage(`成功更新外觀設定: ${data.message}`);
       } else {
         setMessage(`錯誤: ${data.error}`);
@@ -98,7 +138,58 @@ export default function TestAppearancePage() {
     <div className="container mx-auto p-6 max-w-4xl">
       <h1 className="text-3xl font-bold mb-6 text-center">外觀設定 API 測試</h1>
       
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-6" style={{ color: 'navy' }}>
+      {/* 新增端點選擇 */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-blue-800">
+        <h3 className="font-semibold text-blue-800 mb-2">選擇 API 端點:</h3>
+        <div className="flex gap-4">
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="endpoint"
+              value="eliza"
+              checked={selectedEndpoint === 'eliza'}
+              onChange={(e) => setSelectedEndpoint(e.target.value)}
+              className="mr-2"
+            />
+            原始端點 (/api/eliza)
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="endpoint"
+              value="appearance"
+              checked={selectedEndpoint === 'appearance'}
+              onChange={(e) => setSelectedEndpoint(e.target.value)}
+              className="mr-2"
+            />
+            新端點 (/api/appearance)
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="endpoint"
+              value="appearance-get"
+              checked={selectedEndpoint === 'appearance-get'}
+              onChange={(e) => setSelectedEndpoint(e.target.value)}
+              className="mr-2"
+            />
+            分離端點 (/api/appearance/get)
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="endpoint"
+              value="theme"
+              checked={selectedEndpoint === 'theme'}
+              onChange={(e) => setSelectedEndpoint(e.target.value)}
+              className="mr-2"
+            />
+            主題端點 (/api/theme)
+          </label>
+        </div>
+      </div>
+      
+      <div className="bg-white text-blue-800 rounded-lg shadow-lg p-6 mb-6">
         <h2 className="text-xl font-semibold mb-4">獲取外觀設定</h2>
         
         <div className="flex gap-4 mb-4">
@@ -170,6 +261,7 @@ export default function TestAppearancePage() {
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h3 className="font-semibold text-blue-800 mb-2">使用說明:</h3>
         <ul className="text-blue-700 text-sm space-y-1">
+          <li>• 選擇你喜歡的 API 端點名稱</li>
           <li>• 輸入外觀 ID 並點擊「獲取外觀」來測試 GetAppearance API</li>
           <li>• 獲取外觀後，點擊「測試更新外觀」來測試 UpdateAppearance API</li>
           <li>• 更新會修改主色調、輔色調、Logo 類型和大小</li>
