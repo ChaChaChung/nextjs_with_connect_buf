@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { SayRequest, SayResponse } from "./eliza_pb.ts";
+import { SayRequest, SayResponse, GetRandomPersonRequest, GetRandomPersonResponse } from "./eliza_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -21,6 +21,14 @@ export const ElizaService = {
       O: SayResponse,
       kind: MethodKind.Unary,
     },
+    /**
+     * @generated from rpc connectrpc.eliza.v1.ElizaService.GetRandomPerson
+     */
+    getRandomPerson: {
+      name: "GetRandomPerson",
+      I: GetRandomPersonRequest,
+      O: GetRandomPersonResponse,
+      kind: MethodKind.Unary,
+    },
   }
 } as const;
-

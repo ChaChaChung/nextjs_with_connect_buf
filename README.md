@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js with gRPC-Connect and Buf
 
-## Getting Started
+這是一個使用 Next.js 前端和 Go gRPC-Connect 後端的專案，展示如何在前端同時呼叫多個後端 API 並整合結果。
 
-First, run the development server:
+## 專案結構
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+nextjs_with_connect_buf/
+├── app/                    # Next.js 應用程式
+│   ├── api/               # API 路由
+│   │   └── eliza/         # Eliza API 端點
+│   ├── test-api/          # 測試頁面
+│   └── lib/               # 共用函式庫
+├── gen/                   # 生成的 TypeScript 檔案
+│   └── proto/
+├── proto/                 # Protocol Buffers 定義
+└── go_server.go          # Go 後端伺服器
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 功能特色
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. 同時呼叫多個 Go API
+- **Say API**: 回傳使用者輸入的句子
+- **GetRandomPerson API**: 回傳隨機人員資料
+- 使用 `Promise.all()` 並行呼叫兩個 API
+- 整合兩個 API 的回應結果
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. 回應格式
+```json
+{
+  "say": {
+    "sentence": "你說的是：Hello World"
+  },
+  "randomPerson": {
+    "person": {
+      "id": "001",
+      "name": "張小明",
+      "age": 28,
+      "email": "zhang.xiaoming@company.com",
+      "department": "工程部",
+      "position": "軟體工程師"
+    }
+  },
+  "timestamp": "2024-01-01T12:00:00.000Z",
+  "message": "成功從 Go 後端取得資料"
+}
+```
 
-## Learn More
+## 快速開始
 
-To learn more about Next.js, take a look at the following resources:
+### 1. 安裝依賴
+```bash
+npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. 啟動 Go 後端
+```bash
+go run go_server.go
+```
+後端將在 `:8080` 啟動
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. 啟動 Next.js 前端
+```bash
+npm run dev
+```
+前端將在 `:3003` 啟動
 
-## Deploy on Vercel
+### 4. 測試 API
+訪問 `http://localhost:3003/test-api` 來測試 API 功能
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API 端點
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### POST /api/eliza
+- **用途**: 同時呼叫 Go 後端的兩個 API 方法
+- **請求體**: `{ "sentence": "你的句子" }`
+- **回應**: 包含兩個 API 結果的整合回應
+
+## 技術架構
+
+### 前端 (Next.js)
+- 使用 `@connectrpc/connect-web` 建立 gRPC-Connect 客戶端
+- 並行呼叫多個後端 API
+- 整合和格式化回應資料
+
+### 後端 (Go)
+- 使用 `connectrpc.com/connect` 建立 gRPC-Connect 伺服器
+- 實作 `ElizaService` 的兩個方法
+- 支援 CORS 跨域請求
+
+### Protocol Buffers
+- 定義服務介面和訊息格式
+- 自動生成 TypeScript 和 Go 程式碼
+
+## 開發注意事項
+
+1. **CORS 設定**: 後端已設定允許來自 `localhost:3003` 的請求
+2. **錯誤處理**: 前端包含完整的錯誤處理和載入狀態
+3. **類型安全**: 使用生成的 TypeScript 類型確保類型安全
+4. **並行處理**: 使用 `Promise.all()` 提高 API 呼叫效率
+
+## 故障排除
+
+### 常見問題
+1. **後端連接失敗**: 確保 Go 伺服器在 `:8080` 運行
+2. **CORS 錯誤**: 檢查後端的 CORS 設定
+3. **Proto 檔案錯誤**: 重新生成 TypeScript 檔案
+
+### 重新生成 Proto 檔案
+```bash
+buf generate
+```
+
+## 擴展功能
+
+可以輕鬆添加新的 API 方法：
+1. 在 `proto/eliza.proto` 中定義新的服務方法
+2. 在 Go 後端實作新方法
+3. 在前端 API 路由中呼叫新方法
+4. 更新測試頁面顯示新功能

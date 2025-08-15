@@ -6,6 +6,7 @@ option go_package = "myapp/backend/gen/connectrpc/eliza/v1;v1";
 
 service ElizaService {
   rpc Say(SayRequest) returns (SayResponse);
+  rpc GetRandomPerson(GetRandomPersonRequest) returns (GetRandomPersonResponse);
 }
 
 message SayRequest {
@@ -14,4 +15,21 @@ message SayRequest {
 
 message SayResponse {
   string sentence = 1;
+}
+
+message Person {
+  string id = 1;
+  string name = 2;
+  int32 age = 3;
+  string email = 4;
+  string department = 5;
+  string position = 6;
+}
+
+message GetRandomPersonRequest {
+  // 空請求，不需要額外參數
+}
+
+message GetRandomPersonResponse {
+  Person person = 1;
 }

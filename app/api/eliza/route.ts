@@ -1,5 +1,3 @@
-// 檔案路徑: app/api/eliza/route.ts
-
 import { NextResponse } from "next/server";
 import { elizaClient } from "../../lib/connect";
 
@@ -17,19 +15,34 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. 在伺服器端，使用 elizaClient 呼叫真正的 Go 後端 API
-    console.log(`Forwarding request to Go backend with sentence: "${sentence}"`);
-    const goResponse = await elizaClient.say({
-      sentence: sentence,
-    });
+    // 2. 同時呼叫兩個 Go 後端 API
+    const [sayResponse, randomPersonResponse] = await Promise.all([
+      // 呼叫 say 方法
+      elizaClient.say({
+        sentence: sentence,
+      }),
+      // 呼叫 getRandomPerson 方法
+      elizaClient.getRandomPerson({})
+    ]);
 
-    // 3. 將從 Go 後端收到的回應，作為 JSON 回傳給前端
-    return NextResponse.json(goResponse);
+    // 3. 整理兩個 API 的回應，一起回傳給前端
+    const combinedResponse = {
+      say: {
+        sentence: sayResponse.sentence
+      },
+      randomPerson: {
+        person: randomPersonResponse.person
+      },
+      timestamp: new Date().toISOString(),
+      message: "成功從 Go 後端取得資料"
+    };
+
+    return NextResponse.json(combinedResponse);
 
   } catch (error) {
     console.error("API route error:", error);
     return NextResponse.json(
-      { error: "An internal server error occurred" },
+      { error: "An internal server error occurred", details: error instanceof Error ? error.message : "Unknown error" },
       { status: 500 }
     );
   }
