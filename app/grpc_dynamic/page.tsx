@@ -2,15 +2,33 @@
 
 import { useState } from "react";
 
+type responseType = {
+  say: {
+    sentence: string;
+  };
+  randomPerson: {
+    person: {
+      age: number
+      department: string
+      email: string
+      id: string
+      name: string
+      position: string
+    }
+  };
+  timestamp: string;
+  message: string;
+}
+
 export default function DynamicPage() {
   const [inputValue, setInputValue] = useState("Hello from Next.js client!");
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState<responseType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setResponse("");
+    setResponse(null);
 
     try {
       // 使用瀏覽器的 fetch 來呼叫我們自己的 Next.js API Route
@@ -27,10 +45,10 @@ export default function DynamicPage() {
       }
 
       const data = await res.json();
-      setResponse(data.sentence);
+      setResponse(data);
     } catch (error) {
       console.error(error);
-      setResponse("Failed to get response from server.");
+      setResponse(null);
     } finally {
       setIsLoading(false);
     }
@@ -56,10 +74,19 @@ export default function DynamicPage() {
       </form>
 
       {
-        response && (
+        response?.say && (
           <div className="mb-12 p-6 border rounded-lg bg-gray-50">
               <p className="text-lg text-blue-600">
-              <strong>Go Server Response:</strong> {response}
+              <strong>Go Server Response:</strong> {response.say.sentence}
+              </p>
+          </div>
+        )
+      }
+      {
+        response?.randomPerson && (
+          <div className="mb-12 p-6 border rounded-lg bg-gray-50">
+              <p className="text-lg text-blue-600">
+              <strong>Go Server Random Person:</strong> {response.randomPerson.person.name} / {response.randomPerson.person.age}歲 / {response.randomPerson.person.position}
               </p>
           </div>
         )
