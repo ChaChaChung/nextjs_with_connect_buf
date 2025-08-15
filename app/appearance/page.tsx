@@ -174,17 +174,6 @@ export default function TestAppearancePage() {
           {message}
         </div>
       )}
-
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h3 className="font-semibold text-blue-800 mb-2">使用說明:</h3>
-        <ul className="text-blue-700 text-sm space-y-1">
-          <li>• 選擇你喜歡的 API 端點名稱</li>
-          <li>• 輸入外觀 ID 並點擊「獲取外觀」來測試 GetAppearance API</li>
-          <li>• 獲取外觀後，點擊「測試更新外觀」來測試 UpdateAppearance API</li>
-          <li>• 更新會修改主色調、輔色調、Logo 類型和大小</li>
-          <li>• 確保 Go 後端服務正在運行在 localhost:8080</li>
-        </ul>
-      </div>
     </div>
   );
 }
